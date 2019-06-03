@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/vue"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    
+  </div>
+ 
+<script>
+  let app = new Vue({
+    el: '#app',
+    data: {
+      title: 'Note app',
+      message: null,
+      note: {
+        title: '',
+        descr: ''
+      },
+      notes: [
+        {
+          title:'First node',
+          descr: 'Description for note',
+          date: new Date(Date.now().toLocaleString())
+        },
+        {
+          title:'Second node',
+          descr: 'Description for note',
+          date: new Date(Date.now()).toLocaleString()
+        },
+        {
+          title:'Third node',
+          descr: 'Description for note',
+          date: new Date(Date.now()).toLocaleString()
+        }
+      ]
+    },
+    methods: {
+      addNote() {
+        let {title, descr} = this.note;
+
+        if(title === '') {
+          this.message = "Title can't be blank";
+          return false;
+        }
+
+        this.notes.push({
+          title,
+          descr,
+          date: new Date(Date.now()).toLocaleString()
+        })
+
+        this.note.title = '';
+        this.note.descr = '';
+      }
+    }
+  })
+</script>  
+</body>
+</html>
