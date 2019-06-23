@@ -3,9 +3,8 @@
   <div class="wrapper-content">
     <section>
       <div class="container">
-        <message v-if="message" :message="message"/>
         <!-- note add -->
-        <newNote :note="note" :priorities="priorities" @addNote="addNote"/>
+        <newNote />
         <!-- notes list -->
 
         <div class="note-header">
@@ -22,10 +21,7 @@
           </div>
         </div>
         
-        <notes 
-          :grid="grid" 
-          :notes="notesFilter" 
-          @remove="removeNote"/>
+        <notes :grid="grid" :notes="notesFilter"/>
         
       </div>
     </section>
@@ -41,7 +37,6 @@ import newNote from '@/components/NewNote.vue'
 
 export default {
   components: {
-    message,
     notes,
     search,
     newNote    
@@ -49,65 +44,10 @@ export default {
   data() {
     return {
       title: 'Note app',
-      message: null,
       grid: true,
       search: '',
-      note: {
-        title: '',
-        priority: 'Common',
-        descr: ''
-      },
-      priorities: [
-        "Common",
-        "Important",
-        "Very important"
-      ],
-      notes: [
-        {
-          title:'First node',
-          descr: 'Description for note',
-          date: new Date(Date.now()).toLocaleString(),
-          priority: "Very important"
-        },
-        {
-          title:'Second node',
-          descr: 'Description for note',
-          date: new Date(Date.now()).toLocaleString(),
-          priority: "Common"
-        },
-        {
-          title:'Third node',
-          descr: 'Description for note',
-          date: new Date(Date.now()).toLocaleString(),
-          priority: "Important"
-        }
-      ]
+      notes: null
     }
-  },
-  methods: {
-    addNote() {
-      let {title, descr, priority} = this.note;
-
-      if(title === '') {
-        this.message = "Title can't be blank";
-        return false;
-      }
-
-      this.notes.push({
-        title,
-        descr,
-        priority,
-        date: new Date(Date.now()).toLocaleString()
-      })
-
-      this.message = null;
-      this.note.title = '';
-      this.note.descr = '';
-      this.note.priority = 'Common';
-    },
-    removeNote(index) {
-      this.notes.splice(index, 1);
-    },
   },
   computed: {
     notesFilter(){ 
@@ -126,6 +66,10 @@ export default {
       return array;
 
     }
+  },
+  
+  created: function() {
+    this.notes = this.$store.getters.getNotes
   }
 }
 </script>

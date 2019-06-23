@@ -5,11 +5,11 @@
         <div class="note-header-left">
           <p>{{note.title}}</p>
           <div class="note-priority" 
-              :class="getClass(note.priority)">
+              :class="note.priority">
             {{note.priority}}
           </div>
         </div>
-        <p style="cursor:pointer; align-self:flex-start" @click="removeNote(index)">X</p>
+        <p class="note-remove" @click="removeNote(index)">X</p>
       </div> 
       <div class="note-body">
         <p>{{note.descr}}</p>
@@ -31,19 +31,9 @@ export default {
       required: true
     }
   },
-
   methods: {
     removeNote(index) {
-      this.$emit('remove', index);
-    },
-    getClass(priority) {
-      if(priority === 'Very important') {
-        return 'red';
-      } else if(priority === 'Important') {
-        return 'yellow'
-      } else {
-        return null
-      }
+      this.$store.dispatch('removeNote', index)
     }
   }
 }
@@ -101,10 +91,11 @@ export default {
         padding: 0 10px;
         border-radius: 5px;
         margin-left: 10px;
-        &.red {
+        text-transform: capitalize;
+        &.critical {
           background: #fc5c65;
         }
-        &.yellow {
+        &.important {
           background: #fed330;
         }
       }
@@ -119,5 +110,9 @@ export default {
       font-size: 14px;
       color: #999;
     }
+  }
+  .note-remove {
+    cursor:pointer; 
+    align-self:flex-start
   }
 </style>
