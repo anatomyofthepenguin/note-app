@@ -21,7 +21,9 @@
           </div>
         </div>
         
-        <notes :grid="grid" :notes="notesFilter"/>
+        <notes 
+          :grid="grid" 
+          :notes="notesFilter"/>
         
       </div>
     </section>
@@ -46,10 +48,14 @@ export default {
       title: 'Note app',
       grid: true,
       search: '',
-      notes: null
+      descrChange: null,
+      titleChange: null
     }
   },
   computed: {
+    notes () {
+      return this.$store.getters.getNotes;
+    },
     notesFilter(){ 
       let array = this.notes,
           search = this.search;
@@ -66,10 +72,6 @@ export default {
       return array;
 
     }
-  },
-  
-  created: function() {
-    this.notes = this.$store.getters.getNotes
   }
 }
 </script>

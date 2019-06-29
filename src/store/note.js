@@ -27,6 +27,10 @@ export default {
     },
     addNote(state, payload) {
       state.notes.push(payload)
+    },
+    updateNote(state, payload) {
+      const {index, field, text} = payload;
+      state.notes[index][field] = text;
     }
   },
   actions: {
@@ -35,6 +39,9 @@ export default {
     },
     addNote({commit}, payload) {
       commit('addNote', payload)
+    },
+    updateNote({commit}, payload) {
+      commit('updateNote', payload)
     }
   },
   getters: {
